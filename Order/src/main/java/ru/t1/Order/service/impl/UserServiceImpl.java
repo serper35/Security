@@ -1,6 +1,7 @@
 package ru.t1.Order.service.impl;
 
 import jakarta.transaction.Transactional;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import ru.t1.Order.dto.OrderDTO;
 import ru.t1.Order.dto.UserDTO;
@@ -15,10 +16,11 @@ import ru.t1.Order.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     private OrderRepository orderRepository;
     private Mapper mapper;
@@ -28,6 +30,8 @@ public class UserServiceImpl implements UserService {
         this.orderRepository = orderRepository;
         this.mapper = mapper;
     }
+
+    //todo сделать проверку на вызываемые метод от юзера
 
     @Override
     @Transactional
@@ -74,5 +78,22 @@ public class UserServiceImpl implements UserService {
         return orders.stream()
                 .map(mapper::convertOrderToDTO)
                 .collect(Collectors.toList());
+    }
+
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByName(username).orElseThrow(() -> new  UserNotFoundException("User not found exception"));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) {
+        User user = findUserByUsername(username);
+        String authority = "ROLE_" + user.getRole().name();
+
+        return org.springframework.security.core.userdetails.User
+                .withUsername(user.getName())
+                .password(user.getPassword())
+                .authorities(authority)
+                .build();
     }
 }

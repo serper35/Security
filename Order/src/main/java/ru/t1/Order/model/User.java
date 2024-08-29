@@ -18,11 +18,16 @@ public class User {
 
     private String name;
 
+    private String password;
+
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Order> orders;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public String toString() {

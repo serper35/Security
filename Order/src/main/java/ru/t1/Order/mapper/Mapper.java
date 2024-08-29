@@ -22,6 +22,8 @@ public class Mapper {
         dto.setId(user.getId());
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
+        dto.setPassword(user.getPassword());
+        dto.setRole(user.getRole());
         dto.setOrders(user.getOrders().stream()
                 .map(this::convertOrderToDTO)
                 .collect(Collectors.toList()));
@@ -33,6 +35,8 @@ public class Mapper {
         user.setId(userDTO.getId());
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
+        user.setPassword(userDTO.getPassword());
+        user.setRole(userDTO.getRole());
         user.setOrders(userDTO.getOrders().stream()
                 .map(this::convertOrderToEntity)
                 .collect(Collectors.toList()));

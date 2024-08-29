@@ -1,12 +1,17 @@
 package ru.t1.Order.dto;
 
+import ru.t1.Order.model.Role;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO {
     private int id;
     private String name;
+
+    private String password;
     private String email;
+    private Role role;
     private List<OrderDTO> orders = new ArrayList<>();
 
     public int getId() {
@@ -39,6 +44,22 @@ public class UserDTO {
 
     public void setOrders(List<OrderDTO> orders) {
         this.orders = orders;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
