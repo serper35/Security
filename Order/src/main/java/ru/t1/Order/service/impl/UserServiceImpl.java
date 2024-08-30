@@ -2,6 +2,7 @@ package ru.t1.Order.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import ru.t1.Order.dto.OrderDTO;
 import ru.t1.Order.dto.UserDTO;
@@ -20,7 +21,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
     private OrderRepository orderRepository;
     private Mapper mapper;
@@ -30,8 +31,6 @@ public class UserServiceImpl implements UserService{
         this.orderRepository = orderRepository;
         this.mapper = mapper;
     }
-
-    //todo сделать проверку на вызываемые метод от юзера
 
     @Override
     @Transactional
